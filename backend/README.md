@@ -3,7 +3,7 @@
 Owner: shared (integration led by Leawi)
 
 FastAPI service that hosts the recognition model (`../ml/`) and the NLP
-correction module (`../nlp_correction/`) as a remote API consumed by the
+correction module (inside `../ml/`) as a remote API consumed by the
 mobile app (`../mobile/`).
 
 ## Folder layout
@@ -12,7 +12,7 @@ mobile app (`../mobile/`).
 backend/
 ├── app/
 │   ├── routes/     API endpoint definitions
-│   ├── services/   Calls into ml/ and nlp_correction/
+│   ├── services/   Calls into the ml/ recognition and correction code
 │   └── models/     Request/response schemas
 └── tests/          Backend tests
 ```
@@ -24,8 +24,8 @@ backend/
 - **Response:** JSON — recognized-and-corrected text, plus optionally the
   raw (pre-correction) text for debugging/error analysis
 
-This contract is not final. Update this section once `ml/` and
-`nlp_correction/` have working interfaces.
+This contract is not final. Update this section once the `ml/` recognition and
+correction code have working interfaces.
 
 ## Setup
 

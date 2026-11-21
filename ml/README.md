@@ -21,6 +21,7 @@ ml/
 │   ├── metrics/         Training and evaluation metrics
 │   └── predictions/     Sample and analysis outputs
 ├── src/                  CRNN training and evaluation code
+├── docs/                 Datasheet and model card (guideline Section 9)
 ├── requirements.txt
 └── README.md
 ```
@@ -87,11 +88,17 @@ Extended CRNN training and evaluation workflow.
 
 This script performs model training, validation, checkpointing, and evaluation.
 
-## Dataset
+## Datasets
 
-The project uses the **Fidel handwritten Amharic OCR dataset**.
+The approved proposal uses two datasets:
 
-The dataset itself is not committed to the repository. Raw and processed datasets should remain excluded through `.gitignore`.
+* **Fidel** handwritten Amharic OCR dataset ([Hugging Face](https://huggingface.co/datasets/upanzi/fidel-dataset)), downloaded by `src/data_prep.py`
+* **AHL-D 29K** (Amharic Handwritten Line Dataset), not integrated yet
+
+Datasets are not committed to the repository. Raw and processed datasets stay excluded through `.gitignore`.
+Dataset details, licences and script normalisation choices are documented in [`docs/datasheet.md`](docs/datasheet.md);
+model details in [`docs/model-card.md`](docs/model-card.md); each reported result and the script behind it in
+[`results/README.md`](results/README.md).
 
 ## Setup
 

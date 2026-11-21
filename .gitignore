@@ -10,13 +10,9 @@ env/
 .mypy_cache/
 .pytest_cache/
 
-# ===== Node / React Native =====
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.expo/
-.expo-shared/
+# ===== Flutter (see also mobile/.gitignore) =====
+.dart_tool/
+**/build/
 *.jks
 *.p8
 *.p12
@@ -41,6 +37,10 @@ ml/models/*
 ml/data/*
 !ml/data/processed/
 !ml/data/processed/.gitkeep
+# Small lexical resource that is intentionally tracked (check its licence in ml/docs/datasheet.md)
+!ml/data/raw/
+ml/data/raw/*
+!ml/data/raw/amharic_wordlist.txt
 # ===== Jupyter =====
 .ipynb_checkpoints/
 
@@ -54,3 +54,8 @@ Thumbs.db
 dist/
 build/
 *.log
+
+# ===== Office / report drafts =====
+# Word and LibreOffice lock files created while a document is open
+~$*
+.~lock.*#
