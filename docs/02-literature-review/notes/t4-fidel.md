@@ -2,33 +2,35 @@
 
 ## Citation (IEEE)
 
+<!-- CHECK against the paper's first page: third author (B. R. Adego?), volume 29, pages 815–833, title hyphenation. -->
+
 T. T. Chamisso, B. Guda, B. Retta, C. P. Sagbo, G. Z. Ashungafac, and A. Gueye, “Fidel: A large-scale sentence level Amharic OCR dataset,” International Journal on Document Analysis and Recognition, vol. 29, pp. 815–833, 2026, doi: 10.1007/s10032-026-00593-7.
 
 ## Problem
 
-The paper addresses the shortage of large-scale, sentence-level Amharic OCR resources. Earlier datasets were often restricted to isolated characters, individual words, historical documents, or synthetic text. These resources do not fully represent the combination of handwriting variation and linguistic context encountered in contemporary Amharic documents. Fidel responds by bringing handwritten, typed, and synthetic line images together within a common benchmark.
+Amharic OCR has lacked a large dataset of full sentences. Earlier datasets mostly covered single characters, single words, historical documents, or synthetic text. None of them combine real handwriting with the sentence context that shows up in everyday Amharic documents.
 
-Amharic recognition is challenging because the Ethiopic script contains visually similar characters whose distinctions can depend on small stroke changes. Handwriting introduces further variation through inconsistent spacing, character connections, and writer-dependent shapes. Consequently, good performance on clean printed or synthetic text does not necessarily imply reliable handwritten recognition.
+The Ethiopic script makes this hard. Many characters look alike and differ only by a small stroke. Handwriting adds uneven spacing, joined characters and a different style for every writer. A model that does well on clean printed or synthetic text can still fail on handwriting.
 
-The paper’s contribution is therefore both a dataset and an evaluation framework: it provides line-level image–transcription pairs, writer metadata, and baseline recognition results to support reproducible comparison.
+Fidel answers this with a dataset and a benchmark: line images paired with their transcriptions, writer information, and baseline results that others can reproduce.
 
 ## Method
 
-Fidel is a dataset-and-benchmark study rather than a proposal for one new recognition architecture. The authors collect and process real handwritten and typed text, generate synthetic examples, and evaluate established OCR systems on the resulting resource.
+Fidel is a dataset and benchmark paper. It does not propose a new recognition model. The authors build the data and then test existing OCR systems on it.
 
-### Real-data collection and processing
+### Real data
 
-The authors collect handwriting from 411 native Amharic writers recruited through academic institutions in Addis Ababa. Participants transcribe sampled Amharic sentences on standardized forms, and anonymized writer identifiers link samples to their writers. The source sentences are drawn from the amWaC corpus, with attention to Ethiopic character coverage.
+411 native Amharic writers, recruited through universities in Addis Ababa, copied sample sentences onto standard forms. The sentences come from the amWaC corpus and were chosen to cover the Ethiopic characters. Each writer has an anonymous ID.
 
-The processing workflow converts scanned forms into line images paired with transcriptions. It includes deskewing, binarization, line segmentation, image–label alignment, and quality checks. These steps produce the pre-segmented line inputs used by the recognition benchmark.
+The forms were scanned and turned into line images with their transcriptions. The steps were deskewing, binarization, line segmentation, aligning image and text, and quality checks.
 
-### Synthetic-data generation
+### Synthetic data
 
-The synthetic subset is generated from amWaC and CC-100 Amharic text using 43 Ethiopic-supporting fonts. It supplements the real images with additional text and font variation. The authors generate 297,810 synthetic line images; synthetic data are therefore the largest component of the released resource.
+The authors rendered 297,810 line images from amWaC and CC-100 Amharic text, using 43 fonts that support Ethiopic. This is the largest part of the dataset.
 
-### Baseline recognition systems
+### Systems tested
 
-Table 3 reports seven evaluated settings:
+Table 3 reports seven settings:
 
 - DocTR CRNN (VGG16)
 - DocTR MASTER
@@ -38,40 +40,39 @@ Table 3 reports seven evaluated settings:
 - SuryaOCR, fine-tuned
 - CRNN-Att
 
-These are seven evaluation settings, not seven entirely distinct architectures: zero-shot and fine-tuned SuryaOCR are reported separately. The results tables do not list a separate model explicitly named “CRNN+CTC.” Accordingly, this review retains the published DocTR CRNN label rather than treating it as an exact match to our implementation.
+Zero-shot and fine-tuned SuryaOCR are counted separately, so these are seven settings, not seven different architectures. No result is labelled "CRNN+CTC". The closest is DocTR CRNN, so I keep that name and do not treat it as the same thing as our model.
 
 ## Data
 
-| Subset | Number of line images | Content |
+| Subset | Line images | Content |
 |---|---|---|
-| Handwritten | 40,855 | Real handwriting from 411 writers |
+| Handwritten | 40,855 | Real handwriting, 411 writers |
 | Typed | 28,342 | Scanned printed text |
-| Synthetic | 297,810 | Computer-rendered Amharic text |
-| Total | 367,007 | Combined resource |
+| Synthetic | 297,810 | Computer-rendered text |
+| Total | 367,007 | All three |
 
-These figures describe the dataset resource, not the number of samples necessarily used in every training experiment. In particular, the benchmark limits synthetic training data to 60,000 samples to reduce synthetic dominance.
+These are the sizes of the dataset, not of each experiment. The benchmark uses at most 60,000 synthetic samples for training so that synthetic text does not dominate.
 
-### Splits and unseen writers
+### Splits
 
-The handwritten subset uses approximately 70% of writers for training, 15% for validation, and 15% for testing. The split is writer-disjoint: writers in the handwritten test set do not appear in the training or validation sets. This makes the evaluation relevant to recognition of previously unseen handwriting styles.
-
-The typed subset is partitioned at document level, preventing lines from the same document from being distributed across different splits. The synthetic subset is randomly partitioned. The paper also describes filtering text overlap between training and test samples to reduce near-duplicate leakage.
+Handwritten data is split by writer: about 70% of writers for training, 15% for validation and 15% for testing. A test writer never appears in training, so the test measures how the model copes with unseen handwriting. Typed data is split by document, and synthetic data is split randomly. The authors also filter near-duplicate text between training and test sets.
 
 ## Evaluation
 
-The paper evaluates recognition with Character Error Rate (CER) and Word Error Rate (WER), expressed as percentages; lower values indicate fewer transcription errors. The benchmark operates on pre-segmented line images rather than complete document pages.
+The paper reports Character Error Rate (CER) and Word Error Rate (WER) as percentages, where lower is better. Models read line images that are already cut out, not whole pages.
 
-Table 3 distinguishes two test groupings:
+Table 3 uses two test groups:
 
-- **ALL:** handwritten, typed, and synthetic text.
+- **ALL:** handwritten, typed and synthetic text.
 - **REALWORLD:** handwritten and typed text only.
 
-Table 4 separates handwritten, typed, and synthetic performance for three selected models. This breakdown is particularly important for our project because neither ALL nor REALWORLD is a handwritten-only evaluation.
+Table 4 gives separate handwritten, typed and synthetic results for three models. This matters for us, because neither ALL nor REALWORLD is handwritten-only.
 
 ## Key Results
 
 ### Overall and real-world results
-Fine-tuned SuryaOCR obtains the lowest aggregate errors in Table 3: 2.64% CER and 7.29% WER on ALL. Its REALWORLD results are 6.17% CER and 17.06% WER.
+
+<!-- CHECK every number below against Table 3 in the paper. -->
 
 | Model | ALL CER (%) | ALL WER (%) | REALWORLD CER (%) | REALWORLD WER (%) |
 |---|---|---|---|---|
@@ -85,61 +86,56 @@ Fine-tuned SuryaOCR obtains the lowest aggregate errors in Table 3: 2.64% CER an
 
 Source: Table 3.
 
-The comparison between zero-shot and fine-tuned SuryaOCR shows the importance of task-specific adaptation in this benchmark. However, the combined scores should not be used as handwritten recognition results: typed and synthetic examples also contribute to ALL.
+Fine-tuned SuryaOCR is best overall: 2.64% CER and 7.29% WER on ALL, and 6.17% CER and 17.06% WER on REALWORLD. The gap between the zero-shot and fine-tuned versions shows how much fine-tuning for Amharic matters. These scores include typed and synthetic text, so they cannot be used as handwriting results.
 
-### Handwritten, typed, and synthetic results
+### Handwritten, typed and synthetic results
 
-| Model label in Table 4 | Handwritten CER (%) | Handwritten WER (%) | Typed CER (%) | Typed WER (%) | Synthetic CER (%) | Synthetic WER (%) |
+<!-- CHECK against Table 4. The CRNN-Att row looks suspicious: synthetic WER (14.3) is lower than synthetic CER (17.32), and its handwritten CER (30.7) does not fit its REALWORLD score in Table 3. -->
+
+| Model (as labelled in Table 4) | Handwritten CER (%) | Handwritten WER (%) | Typed CER (%) | Typed WER (%) | Synthetic CER (%) | Synthetic WER (%) |
 |---|---|---|---|---|---|---|
 | Surya OCR | 11.0 | 33.0 | 1.0 | 2.0 | 1.0 | 2.0 |
 | DocTR (CRNN-VGG16) | 14.90 | 42.30 | 2.10 | 8.10 | 7.10 | 21.00 |
 | CRNN-Att | 30.7 | 52.70 | 7.71 | 16.09 | 17.32 | 14.3 |
 
-Source: Table 4, “Performance by text type (CER% / WER%).”
+Source: Table 4.
 
-Surya OCR achieves the lowest handwritten errors among the three models shown: 11.0% CER and 33.0% WER. Its typed performance is substantially stronger, at 1.0% CER and 2.0% WER. Thus, the precise replacement for “typed text is nearly error-free” is that Table 4 reports 1.0% CER and 2.0% WER for Surya OCR on typed text.
+Surya OCR has the lowest handwritten errors of the three: 11.0% CER and 33.0% WER. On typed text it reaches 1.0% CER and 2.0% WER. Table 4 does not say whether this is the fine-tuned checkpoint, so I keep the label as printed.
 
-For our CRNN-based project, the most relevant published CRNN-family reference is DocTR CRNN-VGG16: 14.90% handwritten CER and 42.30% handwritten WER. Its typed results are 2.10% CER and 8.10% WER. These are not, without further architectural verification, results for our exact CRNN+CTC implementation.
-
-Table 4 labels its first model “Surya OCR”; it does not identify the checkpoint in the heading. This review therefore preserves that label rather than presenting its modality-specific values as explicitly identified fine-tuned results.
+The closest result to our CRNN model is DocTR CRNN-VGG16: 14.90% CER and 42.30% WER on handwriting, and 2.10% CER and 8.10% WER on typed text. I cannot call these results for our own CRNN+CTC implementation without checking how the two differ.
 
 ## Error Analysis
 
-The paper discusses recognition errors that are directly relevant to a correction stage:
+The paper describes errors that a correction step could target:
 
-- **Merged words:** whitespace deletion joins adjacent words, producing incorrect word boundaries.
-- **Fidel-order confusion:** the recognizer identifies a base consonant but substitutes another vowel-bearing form.
-- **Visually similar glyph substitutions:** small differences between Ethiopic characters are missed.
-- **Handwriting-related degradation:** writer variation and irregular character formation make handwritten samples substantially harder than clean typed text.
+- **Merged words:** spaces are dropped, so neighbouring words run together.
+- **Fidel-order confusion:** the model gets the base consonant right but picks the wrong vowel form.
+- **Look-alike characters:** small differences between Ethiopic characters are missed.
+- **Handwriting:** differences between writers and irregular letter shapes make handwriting much harder than clean typed text.
 
-These findings indicate that the remaining problem is not simply recognition of individual character shapes. Reliable transcription also requires preserving word boundaries and resolving context-sensitive character alternatives.
+So the remaining problem is not just recognising character shapes. A good transcription also needs correct word boundaries and the right choice between similar characters, using context.
 
 ## Strengths
 
-Scale and mixed text types. Fidel combines more than 367,000 line images across handwritten, typed, and synthetic text, supporting both training and analysis of modality differences.
-
-Writer-disjoint handwritten testing. Unseen test writers make the handwritten evaluation more informative than a split that allows the same writers in training and testing.
-
-Line-level supervision. Image–transcription pairs preserve contextual information beyond isolated characters or words and support sequence-recognition approaches.
-
-Multiple baselines and modality-specific reporting. The paper provides aggregate comparisons as well as handwritten, typed, and synthetic results for selected systems. The modality breakdown exposes limitations that aggregate scores can conceal.
+- **Size and variety.** More than 367,000 line images across handwritten, typed and synthetic text, which allows training and a comparison between types of text.
+- **Unseen writers in the test set.** This makes the handwritten results more realistic than a split that shares writers between training and testing.
+- **Whole lines.** Image-and-text pairs for full lines keep the context that single characters or words lose, and suit sequence models.
+- **Results by text type.** The breakdown shows weaknesses that the overall scores hide.
 
 ## Weaknesses
 
-Limited evidence of population-wide handwriting coverage. Recruitment through academic institutions in Addis Ababa provides useful writer variation, but it does not establish that the dataset represents all regions, age groups, or everyday writing contexts. This is a limitation of representativeness rather than evidence that any particular group performs poorly.
-
-The benchmark starts with segmented lines. It does not by itself establish full-page OCR performance, where layout analysis, line detection, and segmentation errors also affect transcription.
-
-Modality-specific reporting is incomplete across baselines. Table 4 reports only three selected models, whereas Table 3 contains seven evaluated settings. Consequently, readers cannot use these tables alone to compare handwritten performance for every evaluated system or identify a separate custom CRNN+CTC result.
+- **Narrow writer group.** Writers came from universities in Addis Ababa, so the data may not represent other regions, ages or everyday writing. This is my own observation, not something the paper says.
+- **Cut-out lines only.** The benchmark does not test full pages, where finding and segmenting lines adds errors.
+- **Incomplete breakdown.** Table 4 covers three models, while Table 3 covers seven. We cannot compare handwritten results for all of them, and there is no separate CRNN+CTC result.
 
 ## Relevance to Our Project
 
-We train on Fidel, and CRNN+CTC is our main recognition model. Fidel therefore supplies both our data resource and the published benchmark context for evaluating our recognizer.
+Fidel is our training data, and CRNN+CTC is our main model, so the paper gives us both the data and a published point of comparison.
 
-The DocTR CRNN-VGG16 result—14.90% handwritten CER and 42.30% handwritten WER—is a relevant CRNN-family comparison point. We must retain the published model name and verify architectural and training differences before describing it as an exact baseline for our system.
+DocTR CRNN-VGG16 (14.90% handwritten CER, 42.30% WER) is the closest CRNN comparison. We should keep its published name and check how it differs from our model before calling it a baseline.
 
-Our primary comparison should use handwritten-only CER and WER. Comparing our handwritten results against the paper’s 2.64% ALL CER would mix different evaluation populations and could give a misleading impression of relative performance.
+We should compare handwritten results with handwritten results. Setting our handwritten CER against the paper's 2.64% on ALL would compare different data and look better or worse than it really is.
 
-The paper’s merged-word and fidel-order findings directly motivate our correction module. Our module targets missing word boundaries and vowel-form substitutions, so its evaluation should measure whether it reduces those errors rather than merely changing the output text.
+The merged-word and fidel-order errors are the reason for our correction module. We should measure whether it reduces those specific errors, not only whether the text changes.
 
-We will report recognition results before and after correction on the same held-out handwritten test samples. We should also document whether our training uses handwritten data alone or includes typed and synthetic examples. Together, these controls make clear which improvements arise from the recognizer, which arise from correction, and how closely our experimental setting matches the published benchmark.
+We will report results before and after correction on the same held-out handwritten test samples, and state whether our training used handwritten data only or also typed and synthetic data.
