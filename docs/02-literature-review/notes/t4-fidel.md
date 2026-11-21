@@ -2,9 +2,9 @@
 
 ## Citation (IEEE)
 
-<!-- CHECK against the paper's first page: third author (B. R. Adego?), volume 29, pages 815–833, title hyphenation. -->
+<!-- Authors checked against the BibTeX on the dataset page (Hugging Face). STILL CHECK on the Springer page: volume 29, pages 815–833. -->
 
-T. T. Chamisso, B. Guda, B. Retta, C. P. Sagbo, G. Z. Ashungafac, and A. Gueye, “Fidel: A large-scale sentence level Amharic OCR dataset,” International Journal on Document Analysis and Recognition, vol. 29, pp. 815–833, 2026, doi: 10.1007/s10032-026-00593-7.
+T. T. Chamisso, B. Guda, B. R. Adego, C. P. Sagbo, G. Z. Ashungafac, and A. Gueye, “Fidel: A large-scale sentence level Amharic OCR dataset,” International Journal on Document Analysis and Recognition, vol. 29, pp. 815–833, 2026, doi: 10.1007/s10032-026-00593-7.
 
 ## Problem
 
