@@ -2,8 +2,6 @@
 
 ## Citation (IEEE)
 
-<!-- Authors checked against the BibTeX on the dataset page (Hugging Face). STILL CHECK on the Springer page: volume 29, pages 815–833. -->
-
 T. T. Chamisso, B. Guda, B. R. Adego, C. P. Sagbo, G. Z. Ashungafac, and A. Gueye, “Fidel: A large-scale sentence level Amharic OCR dataset,” International Journal on Document Analysis and Recognition, vol. 29, pp. 815–833, 2026, doi: 10.1007/s10032-026-00593-7.
 
 ## Problem
@@ -72,8 +70,6 @@ Table 4 gives separate handwritten, typed and synthetic results for three models
 
 ### Overall and real-world results
 
-<!-- Table 3 values checked against the paper (screenshot, 2026-11-21): all match. -->
-
 | Model | ALL CER (%) | ALL WER (%) | REALWORLD CER (%) | REALWORLD WER (%) |
 |---|---|---|---|---|
 | DocTR CRNN (VGG16) | 6.9 | 21.5 | 7.0 | 21.7 |
@@ -89,8 +85,6 @@ Source: Table 3.
 Fine-tuned SuryaOCR is best overall: 2.64% CER and 7.29% WER on ALL, and 6.17% CER and 17.06% WER on REALWORLD. The gap between the zero-shot and fine-tuned versions shows how much fine-tuning for Amharic matters. These scores include typed and synthetic text, so they cannot be used as handwriting results.
 
 ### Handwritten, typed and synthetic results
-
-<!-- Table 4 values checked against the paper (screenshot, 2026-11-21): all match. The CRNN-Att synthetic WER (14.3) below its CER (17.32) is printed that way in the paper. -->
 
 | Model (as labelled in Table 4) | Handwritten CER (%) | Handwritten WER (%) | Typed CER (%) | Typed WER (%) | Synthetic CER (%) | Synthetic WER (%) |
 |---|---|---|---|---|---|---|
