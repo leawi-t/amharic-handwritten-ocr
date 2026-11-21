@@ -72,7 +72,7 @@ Table 4 gives separate handwritten, typed and synthetic results for three models
 
 ### Overall and real-world results
 
-<!-- CHECK every number below against Table 3 in the paper. -->
+<!-- Table 3 values checked against the paper (screenshot, 2026-11-21): all match. -->
 
 | Model | ALL CER (%) | ALL WER (%) | REALWORLD CER (%) | REALWORLD WER (%) |
 |---|---|---|---|---|
@@ -90,7 +90,7 @@ Fine-tuned SuryaOCR is best overall: 2.64% CER and 7.29% WER on ALL, and 6.17% C
 
 ### Handwritten, typed and synthetic results
 
-<!-- CHECK against Table 4. The CRNN-Att row looks suspicious: synthetic WER (14.3) is lower than synthetic CER (17.32), and its handwritten CER (30.7) does not fit its REALWORLD score in Table 3. -->
+<!-- Table 4 values checked against the paper (screenshot, 2026-11-21): all match. The CRNN-Att synthetic WER (14.3) below its CER (17.32) is printed that way in the paper. -->
 
 | Model (as labelled in Table 4) | Handwritten CER (%) | Handwritten WER (%) | Typed CER (%) | Typed WER (%) | Synthetic CER (%) | Synthetic WER (%) |
 |---|---|---|---|---|---|---|
@@ -98,7 +98,7 @@ Fine-tuned SuryaOCR is best overall: 2.64% CER and 7.29% WER on ALL, and 6.17% C
 | DocTR (CRNN-VGG16) | 14.90 | 42.30 | 2.10 | 8.10 | 7.10 | 21.00 |
 | CRNN-Att | 30.7 | 52.70 | 7.71 | 16.09 | 17.32 | 14.3 |
 
-Source: Table 4.
+Source: Table 4. The CRNN-Att synthetic WER (14.3) is lower than its CER (17.32) in the paper itself, which is unusual, so I do not rely on that cell.
 
 Surya OCR has the lowest handwritten errors of the three: 11.0% CER and 33.0% WER. On typed text it reaches 1.0% CER and 2.0% WER. Table 4 does not say whether this is the fine-tuned checkpoint, so I keep the label as printed.
 
